@@ -1,0 +1,23 @@
+{
+  "stamp": "real data",
+  "corpus": "falcon_CGLNA_test",
+  "n": 5,
+  "tolerance_frac": 0.05,
+  "E1": {
+    "property": "dc_power_w",
+    "rung": "R2",
+    "floor": {
+      "phi": 3.0833333333333328e-06,
+      "coverage": 0.8,
+      "n_classes": 1,
+      "total_var": 1.0124999999999999e-05,
+      "ci_lo": 0.0,
+      "ci_hi": 3.0833333333333328e-06,
+      "n": 5
+    },
+    "tolerance": 5.062499999999999e-07,
+    "null_ratio": 1.0279860082304528,
+    "passed": false,
+    "diagnosis": "floor CI upper bound 3.083e-06 is not below the tolerance 5.062e-07; this property is not graph-determined at R2, so it is the wrong positive control."
+  }
+}
