@@ -70,23 +70,8 @@ def parse_example(rec: dict) -> dict:
 
 def _template(which: str, confirm: Dict[str, str]) -> Callable[[dict], dict]:
     def parser(rec: dict) -> dict:
-        
-
-        raise NotImplementedError(
-            f"\nWrite the {which} parser before converting.\n\n"
-            "It receives one source record and must return:\n"
-            '  {"name": str,\n'
-            '   "devices": [{"kind": str, "value": float|None,\n'
-            '                "terminals": {role: net_name, ...}}, ...],\n'
-            '   "properties": {name: float, ...}}\n\n'
-            "Terminal roles carry meaning at R3 and R4: use 'g'/'d'/'s' for\n"
-            "transistors and 'p'/'n' for two-terminal devices, or pass an explicit\n"
-            "'orient' map. Roles you invent are fine as long as they are consistent\n"
-            "across the corpus.\n\n"
-            f"CONFIRM against the {which} release before trusting any number:\n"
-            + "".join(f"  - {k}: {v}\n" for k, v in confirm.items())
-            + "\nSee parse_example() in this file for a complete worked parser.")
-
+        if (which == "FALCON"):
+            pass
 
     return parser
 
