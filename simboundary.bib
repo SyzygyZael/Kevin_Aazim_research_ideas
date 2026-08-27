@@ -1,0 +1,267 @@
+% ===================================================================
+% Bibliography for: "Beyond Expressiveness: A Representation-Sufficiency Floor"
+% Entries verified via web/arXiv search are marked [VERIFIED].
+% Entries whose author list / venue / year could not be confirmed
+% carry a placeholder corporate author in double braces and a
+% "% VERIFY" note. No author names are invented.
+% ===================================================================
+
+% ---------- Circuit + GNN prior art (the lineage to surpass) ----------
+
+@inproceedings{dong2023cktgnn,
+  title     = {{CktGNN}: Circuit Graph Neural Network for Electronic Design Automation},
+  author    = {Dong, Zehao and Cao, Weidong and Zhang, Muhan and Tao, Dacheng and Chen, Yixin and Zhang, Xuan},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2023},
+  note      = {arXiv:2308.16406 [VERIFIED]}
+}
+
+@article{plettenberg2025flow,
+  title   = {Flow-Attentional Graph Neural Networks},
+  author  = {Plettenberg, Pascal and K{\"o}hler, Dominik and Sick, Bernhard and Thomas, Josephine M.},
+  journal = {Transactions on Machine Learning Research (TMLR)},
+  year    = {2025},
+  note    = {arXiv:2506.06127 [VERIFIED]}
+}
+
+@inproceedings{mehradfar2025falcon,
+  title     = {{FALCON}: An {ML} Framework for Fully Automated Layout-Constrained Analog Circuit Design},
+  author    = {Mehradfar, Asal and Zhao, Xuzhe and Huang, Yilun and Ceyani, Emir and Yang, Yankai and Han, Shihao and Aghasi, Hamidreza and Avestimehr, Salman},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2025},
+  note      = {arXiv:2505.21923 [VERIFIED]; public 1M-circuit dataset, 20 topologies, 5 families, native gain/BW/NF/DC-power/phase-noise}
+}
+
+@article{asadi2025rfinformed,
+  title   = {{RF}-Informed Graph Neural Networks for Accurate and Data-Efficient Circuit Performance Prediction},
+  author  = {Asadi, Anahita and Popryho, Leonid and Partin-Vaisband, Inna},
+  journal = {arXiv preprint arXiv:2508.16403},
+  year    = {2025},
+  note    = {arXiv:2508.16403 [VERIFIED]. Abstract confirms device-terminal graph abstraction and average MRE 3.45\%. NOTE: arXiv lists a later version under the title ``Fast and Accurate RFIC Performance Prediction via Pin Level Graph Neural Networks and Probabilistic Flow''; confirm which version to cite. Per-metric claims must be checked against the paper's own tables}
+}
+
+@inproceedings{fayazi2023funtom,
+  title     = {{FuNToM}: Functional Modeling of {RF} Circuits Using a Neural Network Assisted Two-Port Analysis Method},
+  author    = {Fayazi, Morteza and Taba, Morteza Tavakoli and Afshari, Ehsan and Dreslinski, Ronald},
+  booktitle = {IEEE/ACM International Conference on Computer-Aided Design (ICCAD)},
+  year      = {2023},
+  note      = {[VERIFIED via RF-Informed GNN reference list]}
+}
+
+@article{pan2025gnnaclp,
+  title   = {{GNN-ACLP}: Graph Neural Networks Based Analog Circuit Link Prediction},
+  author  = {Pan, Guanyuan and Zhou, Tiansheng and Ma, Bingtao and Wang, Yaqi and Zhao, Jianxiang and Li, Zhi and Lin, Yugui and Li{\`o}, Pietro and Wang, Shuai},
+  journal = {Engineering Applications of Artificial Intelligence (also arXiv:2504.10240)},
+  year    = {2025},
+  note    = {[VERIFIED]}
+}
+
+@article{gao2025analoggenie,
+  title   = {{AnalogGenie}: A Generative Engine for Automatic Discovery of Analog Circuit Topologies},
+  author  = {Gao, Jian and Cao, Weidong and Yang, Junyi and Zhang, Xuan},
+  journal = {arXiv preprint arXiv:2503.00205},
+  year    = {2025},
+  note    = {[VERIFIED]}
+}
+
+@inproceedings{graphofcircuits2023,
+  title     = {Graph of Circuits with {GNN} for Exploring the Optimal Design Space},
+  author    = {Shahane, Aditya Hemant and Manjiri, Saripilli Venkata Swapna and Jain, Ankesh and Kumar, Sandeep},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2023},
+  note      = {[VERIFIED]; introduces the Graph of Circuits Explorer (GCX) semi-supervised GNN surrogate}
+}
+
+@inproceedings{chang2024lamagic,
+  title     = {{LaMAGIC}: Language-Model-based Topology Generation for Analog Integrated Circuits},
+  author    = {Chang, Chen-Chia and Shen, Yikang and Fan, Shaoze and Li, Jing and Zhang, Shun and Cao, Ningyuan and Chen, Yiran and Zhang, Xuan},
+  booktitle = {International Conference on Machine Learning (ICML), PMLR 235},
+  pages     = {6253--6262},
+  year      = {2024},
+  note      = {arXiv:2407.18269 [VERIFIED]}
+}
+
+@article{sanchez2023survey,
+  title   = {A Comprehensive Survey on Electronic Design Automation and Graph Neural Networks: Theory and Applications},
+  author  = {S{\'a}nchez, Daniela and Servadei, Lorenzo and Kiprit, Gamze Naz and Wille, Robert and Ecker, Wolfgang},
+  journal = {ACM Transactions on Design Automation of Electronic Systems},
+  volume  = {28},
+  number  = {2},
+  pages   = {1--27},
+  year    = {2023},
+  note    = {[VERIFIED via Flow-Attentional GNN reference list]}
+}
+
+% ---------- GNN expressiveness ladder (the "encoder side") ----------
+
+@article{hornik1991,
+  title   = {Approximation Capabilities of Multilayer Feedforward Networks},
+  author  = {Hornik, Kurt},
+  journal = {Neural Networks},
+  volume  = {4},
+  number  = {2},
+  pages   = {251--257},
+  year    = {1991},
+  note    = {[VERIFIED]; universal approximation in $L^p(\mu)$ for arbitrary finite input measures}
+}
+
+@inproceedings{xu2019gin,
+  title     = {How Powerful are Graph Neural Networks?},
+  author    = {Xu, Keyulu and Hu, Weihua and Leskovec, Jure and Jegelka, Stefanie},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2019},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{morris2019wl,
+  title     = {Weisfeiler and Leman Go Neural: Higher-Order Graph Neural Networks},
+  author    = {Morris, Christopher and Ritzert, Martin and Fey, Matthias and Hamilton, William L. and Lenssen, Jan Eric and Rattan, Gaurav and Grohe, Martin},
+  booktitle = {AAAI Conference on Artificial Intelligence},
+  year      = {2019},
+  note      = {[VERIFIED]}
+}
+
+@article{weisfeiler1968reduction,
+  title   = {A Reduction of a Graph to a Canonical Form and an Algebra Arising During This Reduction},
+  author  = {Weisfeiler, Boris and Leman, Andrei},
+  journal = {Nauchno-Technicheskaya Informatsia},
+  volume  = {2},
+  number  = {9},
+  pages   = {12--16},
+  year    = {1968},
+  note    = {[VERIFIED, classical reference]}
+}
+
+@inproceedings{gilmer2017mpnn,
+  title     = {Neural Message Passing for Quantum Chemistry},
+  author    = {Gilmer, Justin and Schoenholz, Samuel S. and Riley, Patrick F. and Vinyals, Oriol and Dahl, George E.},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2017},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{loukas2020cannotlearn,
+  title     = {What Graph Neural Networks Cannot Learn: Depth vs Width},
+  author    = {Loukas, Andreas},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2020},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{sato2021random,
+  title     = {Random Features Strengthen Graph Neural Networks},
+  author    = {Sato, Ryoma and Yamada, Makoto and Kashima, Hisashi},
+  booktitle = {SIAM International Conference on Data Mining (SDM)},
+  year      = {2021},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{bevilacqua2022esan,
+  title     = {Equivariant Subgraph Aggregation Networks},
+  author    = {Bevilacqua, Beatrice and Frasca, Fabrizio and Lim, Derek and Srinivasan, Balasubramaniam and Cai, Chen and Balamurugan, Gopinath and Bronstein, Michael M. and Maron, Haggai},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2022},
+  note      = {[VERIFIED via expressiveness reference lists]}
+}
+
+@inproceedings{rampasek2022graphgps,
+  title     = {Recipe for a General, Powerful, Scalable Graph Transformer},
+  author    = {Ramp{\'a}{\v{s}}ek, Ladislav and Galkin, Mikhail and Dwivedi, Vijay Prakash and Luu, Anh Tuan and Wolf, Guy and Beaini, Dominique},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2022},
+  note      = {arXiv:2205.12454 [VERIFIED]; GraphGPS graph transformer. The authors \emph{argue} the architecture is a universal function approximator on graphs (abstract); cite as their claim, not as a theorem}
+}
+
+@article{lee2025dice,
+  title   = {{DICE}: Device-level Integrated Circuits Encoder with Graph Contrastive Pretraining},
+  author  = {Lee, Sungyoung and Wang, Ziyi and Kim, Seunggeun and Lee, Taekyun and Lai, Yao and Pan, David Z.},
+  journal = {arXiv preprint arXiv:2502.08949},
+  year    = {2025},
+  note    = {[VERIFIED]; self-supervised contrastive-pretrained device-level circuit GNN}
+}
+
+@inproceedings{zhang2019dvae,
+  title     = {{D-VAE}: A Variational Autoencoder for Directed Acyclic Graphs},
+  author    = {Zhang, Muhan and Jiang, Shali and Cui, Zhicheng and Garnett, Roman and Chen, Yixin},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2019},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{thost2021dagnn,
+  title     = {Directed Acyclic Graph Neural Networks},
+  author    = {Thost, Veronika and Chen, Jie},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2021},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{velickovic2018gat,
+  title     = {Graph Attention Networks},
+  author    = {Veli{\v{c}}kovi{\'c}, Petar and Cucurull, Guillem and Casanova, Arantxa and Romero, Adriana and Li{\`o}, Pietro and Bengio, Yoshua},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2018},
+  note      = {[VERIFIED]}
+}
+
+@inproceedings{brody2022gatv2,
+  title     = {How Attentive are Graph Attention Networks?},
+  author    = {Brody, Shaked and Alon, Uri and Yahav, Eran},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2022},
+  note      = {[VERIFIED]}
+}
+
+% ---------- Irreducible error / sufficiency (the "representation side") ----------
+
+@book{hastie2009esl,
+  title     = {The Elements of Statistical Learning: Data Mining, Inference, and Prediction},
+  author    = {Hastie, Trevor and Tibshirani, Robert and Friedman, Jerome},
+  edition   = {2nd},
+  publisher = {Springer},
+  year      = {2009},
+  note      = {[VERIFIED, classical reference; conditional mean minimizes squared risk]}
+}
+
+@book{cover2006information,
+  title     = {Elements of Information Theory},
+  author    = {Cover, Thomas M. and Thomas, Joy A.},
+  edition   = {2nd},
+  publisher = {Wiley},
+  year      = {2006},
+  note      = {[VERIFIED, classical reference; data-processing inequality]}
+}
+
+@article{dimensionless2025irreducible,
+  title   = {Dimensionless Learning Based on Information},
+  author  = {Yuan, Yuan and Lozano-Dur{\'a}n, Adri{\'a}n},
+  journal = {arXiv preprint arXiv:2504.03927 (also Nature Communications)},
+  year    = {2025},
+  note    = {[VERIFIED]; information-theoretic irreducible-error bound on the minimum error achievable across all models}
+}
+
+@article{devroye1996probabilistic,
+  title     = {A Probabilistic Theory of Pattern Recognition},
+  author    = {Devroye, Luc and Gy{\"o}rfi, L{\'a}szl{\'o} and Lugosi, G{\'a}bor},
+  journal   = {Springer},
+  year      = {1996},
+  note      = {[VERIFIED, classical reference; Bayes risk]}
+}
+
+@article{shen2025graphsufficiency,
+  title   = {A Graph Sufficiency Perspective for Neural Networks},
+  author  = {Shen, Cencheng and Dong, Yuexiao},
+  journal = {arXiv preprint arXiv:2507.10215},
+  year    = {2025},
+  note    = {[VERIFIED]; sufficiently expressive layers preserve the input's information (injectivity / region separation); shares the Bayes-MSE / conditional-variance estimand}
+}
+
+% ---------- Benchmark infrastructure ----------
+
+@inproceedings{varbella2024powergraph,
+  title     = {{PowerGraph}: A Power Grid Benchmark Dataset for Graph Neural Networks},
+  author    = {Varbella, Anna and Amara, Kenza and Gjorgiev, Blazhe and El-Assady, Mennatallah and Sansavini, Giovanni},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2024},
+  note      = {[VERIFIED via Flow-Attentional GNN reference list]}
+}

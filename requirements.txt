@@ -1,0 +1,6 @@
+# To run the experiments, this is the whole dependency list.
+numpy>=1.24
+
+# Optional, only for the two paper-QA tools (simboundary_figcheck.py,
+# simboundary_lineclearance.py). Not needed for any experiment.
+# pillow>=10.0        # plus poppler-utils for pdftoppm / pdftotext

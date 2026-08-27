@@ -1,0 +1,5 @@
+{
+  "_comment": "Measured test MSE of your trained models, per property and rung. Feed to simboundary_run.py --model-errors. Same scale as the property values used for the floor. Rungs must be R0..R4. Entries with no matching floor are ignored.",
+  "gain_db":    {"R2": 0.84, "R4": 0.71},
+  "dc_power_w": {"R2": 0.09, "R4": 0.05}
+}

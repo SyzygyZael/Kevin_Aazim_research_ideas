@@ -1,0 +1,368 @@
+======================================================================
+ SIMBOUNDARY  --  STUDENT EXPERIMENT RUNBOOK
+ Paper: "When Can a Graph Replace a Simulator? A Representation-
+         Sufficiency Boundary for GNN-Based Analog Circuit
+         Performance Prediction"
+======================================================================
+
+######################################################################
+##  READ THIS FIRST  --  THE TWO INSTRUCTIONS THAT MATTER MOST      ##
+######################################################################
+
+(1) Bro matters most. THE FLOOR IS NEVER COMPUTED FROM A MODEL. The sufficiency floor
+    Phi = E[Var(P|R)] is computed from the DATA (SPICE labels) grouped
+    by representation-equivalence key -- NO training involved. If you
+    ever find yourself "estimating the floor" from a trained network's
+    residuals, STOP: that measures the gap, not the floor, and destroys
+    the paper's central claim. Floors come only from
+    simboundary_analysis.partition_floor / neighborhood_floor on the
+    released SPICE labels. Trained models are used ONLY to measure how
+    close achievable error gets to that data-derived floor.
+
+(2) RUN THE POSITIVE CONTROL (E1) BEFORE ANYTHING ELSE, AND BELIEVE IT.
+    E1 predicts DC gain, which the framework says has a LOW floor and is
+    nearly solved by a plain 1-WL GIN. If E1 does NOT come out easy
+    (low floor at R2, best-GNN RMSE within the floor's CI), your
+    pipeline is broken (wrong labels, wrong keying, leaked test set,
+    mis-scaled targets). Do not run or trust E2-E5 until E1 passes. A
+    "high floor" result is only credible once the instrument has been
+    shown to return "low" where low is expected.
+
+Everything else below is standard. These two are the ones that, if
+skipped, silently invalidate the whole study.
+
+######################################################################
+
+----------------------------------------------------------------------
+0. RESOURCES  (pin these exact versions)
+CODE IN THIS BUNDLE (run in this order; all five must pass before real data)
+  1. python3 simboundary_theory_check.py     verifies the theory's identities
+  2. python3 simboundary_analysis.py         estimator smoke test
+  3. python3 simboundary_ladder.py           R0..R4 construction + nesting check
+  4. python3 simboundary_data.py             corpus loader + synthetic-stamp check
+  5. python3 simboundary_run.py --self-test  E1,E2,E4,E7,E8 + E3/E6 on synthetic data
+  6. python3 simboundary_convert.py --demo   benchmark conversion, end to end
+
+  Then, on converted benchmark data:
+     python3 simboundary_run.py --corpus <benchmark>.jsonl \
+         --control-property <easy metric> --out results/
+     add --corpus-b <second>.jsonl for E5, --model-errors errors.json for E3/E6
+
+  DATA CONVERSION: write one parser function in simboundary_convert.py. Everything
+  around it (validation, writing, reload, coverage report) is done. parse_example()
+  is a complete worked parser; parse_falcon/parse_ocb are templates that refuse
+  loudly until written. simboundary_data.py documents the target format. FALCON and OCB field names and units are an OPEN
+  BLOCKER: confirm them against the release before trusting any number. The loader
+  raises on a missing or malformed file and never substitutes synthetic circuits;
+  synthetic corpora carry a marker that survives being written to disk, and the
+  driver refuses to produce results from one unless --allow-synthetic is passed.
+
+
+----------------------------------------------------------------------
+Data:
+  * PRIMARY -- FALCON (Mehradfar et al., NeurIPS 2025):
+      https://github.com/AsalMehradfar/FALCON   (arXiv:2505.21923)
+      ~1,000,000 Cadence-simulated circuits, 20 topologies, 5 families
+      (LNA, mixer, VCO, PA, VA). Native labels INCLUDE noise figure and
+      DC power -- this is why FALCON is primary: the properties most
+      likely to be simulation-limited are measured directly, no
+      re-simulation. Use FALCON's native (net-level) graph as R1 and its
+      terminal-annotated netlist as R3.
+      >>> BEFORE USE: confirm the exact field names, units, and the
+      redistribution LICENSE in the FALCON repo. Do not assume a field
+      exists until you have seen it in the released files. If a field or
+      the license is not what this runbook assumes, flag back.
+  * SECONDARY -- Open Circuit Benchmark (OCB), CktGNN repo:
+      https://github.com/zehao-dong/CktGNN
+      - Ckt-Bench-101  (10,000 op-amps, DAGs; gain/bandwidth/
+        phase-margin/FoM specifications)
+      - Ckt-Bench-301  (50,000 circuits)
+      Different family (op-amps) and graph convention (DAGs); used to
+      test whether the boundary generalizes (E5) and as the cheap venue
+      for the pilot and positive control.
+      - /OCB/src has the simulator; needed only if you extend to a
+        property NEITHER benchmark labels (e.g., PSRR).
+  * Use each benchmark's released train/val/test split; on OCB select
+    the SAME test set as CktGNN (Dong et al., 2023) and Flow-Attentional
+    GNN (Plettenberg et al., 2025) for comparability.
+
+Software (pin):
+  * python==3.12, numpy>=1.24 (scipy is not required)
+  * torch==2.x, torch-geometric==2.x  (for the trained encoders only)
+  * simboundary_analysis.py  (this bundle) -- floor estimators, no ML deps
+Seeds:
+  * BASE_SEED=0 everywhere; 10 seeds {0..9} for every trained model.
+
+Encoders (the expressiveness ladder, for the GAP only). Span the
+current frontier so a surviving floor is a real limit, not a weak-
+baseline artifact. Three tiers:
+  TIER 1  1-WL message passing (the reference class for Theorem 2):
+    * GIN                                          Xu et al. 2019
+    * D-VAE, DAGNN  (DAG encoders, OCB)            Zhang 2019; Thost 2021
+  TIER 2  SOTA circuit predictors (the real ceiling):
+    * FALCON net-level GNN                         Mehradfar et al. 2025
+    * RF-informed terminal-level GENConv           Asadi et al. 2025
+    * Flow-DAGNN (flow attention)                  Plettenberg et al. 2025
+    * DICE (self-supervised contrastive pretrain)  Lee et al. 2025
+                                                   github.com/brianlsy98/DICE
+  TIER 3  beyond-1-WL / beyond-message-passing:
+    * ESAN subgraph aggregation                 Bevilacqua et al. 2022
+    * GraphGPS graph transformer (PE/SE)           Rampasek et al. 2022
+                                                   github.com/rampasek/GraphGPS
+  Tier 3 is REQUIRED: Theorem 2 bounds only message passing, so a
+  reviewer will ask whether a transformer beats the floor. It cannot
+  (Corollary 1: it is still a function of R); E3/E7 must show even
+  GraphGPS plateaus at the floor for floor-limited properties.
+  Reuse the authors' released implementations and default
+  hyperparameters, then a fixed small tuning budget. COMPUTE NOTE: the
+  floor analysis (E2) is training-free and cheap (CPU, full 1M set);
+  the expensive part is training Tier 2-3. Reproduce FALCON/RF-informed
+  from their released code and use DICE's released pretrained weights
+  rather than training from scratch. Stage the ladder if GPU-limited;
+  the training-free floors are the headline and need no GPU.
+
+----------------------------------------------------------------------
+1. LADDER CONSTRUCTION  (do this once, verify by counting)
+----------------------------------------------------------------------
+Build node/edge features for each rung R0..R4 (paper Table 2) directly
+from the released netlists:
+  R0 bare topology     : connectivity only
+  R1 typed topology    : + component-type label
+  R2 sized graph       : + OCB-native quantized device values
+  R3 ported netlist    : + terminal role (gate/drain/source, +/-)
+  R4 ported + flow     : + edge orientation (as in Flow-DAGNN)
+On FALCON, the native net-level graph gives R1 and the terminal-
+annotated netlist gives R3 (this is exactly the net-level vs terminal-
+level contrast Asadi et al. 2025 study). On OCB, R2 uses CktGNN's native
+quantization and R3 adds terminal roles.
+For each rung, compute equivalence keys with
+  simboundary_analysis.graph_key(adj, node_feats)
+and REPORT the number of classes and the coverage (fraction of circuits
+in non-singleton classes) BEFORE computing any floor. Sparse coverage at
+R3/R4 is expected and must be disclosed, not hidden.
+
+----------------------------------------------------------------------
+2. EXPERIMENTS
+----------------------------------------------------------------------
+
+--- PILOT (cheap, do first, ~minutes on CPU) ---------------------------
+P0. On Ckt-Bench-101 (the cheap benchmark), compute partition_floor at
+    R0, R1, R2 for GAIN only. No training. Confirm floors are finite,
+    decrease R0>=R1>=R2, and that gain's R2 floor is small relative to
+    total variance. Purpose: sanity-check keying + labels before any GPU
+    time or any FALCON download.
+    Flag-back: if floors are non-monotone or coverage is ~0 at R2,
+    the keying or quantization is wrong -- fix before proceeding.
+
+--- E1  POSITIVE CONTROL (run first; gate for everything) --------------
+  Objective : show the instrument returns "easy" where easy is expected.
+  Data      : the most reliably-easy metric on each benchmark --
+              DC POWER on FALCON (reported well under 1% rel. error) and
+              DC GAIN on Ckt-Bench-101 (op-amp gain is well predicted).
+              Do NOT use FALCON gain-type metrics as the control: the RF
+              SOTA reports them among the HARDER metrics (that is part of
+              what E2 investigates, not a control).
+  Method    : partition_floor at R2 (data only); train GIN, DAGNN,
+              Flow-DAGNN at R2 (10 seeds).
+  Metrics   : floor Phi + bootstrap CI + coverage; best test RMSE and
+              Pearson R over the encoders; gap = err - floor.
+  Expected  : Phi(R2, .) near zero (small fraction of total var);
+              best GNN RMSE within/near the floor CI; gap small.
+  Supports  : validity of the estimator + pipeline.
+  GATE      : if this fails, STOP and debug. Do not report E2-E8.
+
+--- E2  FLOOR CURVES (main result) -------------------------------------
+  Objective : locate, per property, where the floor reaches near zero.
+  Data      : FALCON (primary), then OCB Ckt-Bench-101/301 (replication).
+  Method    : partition_floor at R0..R4 for
+                FALCON: P in {gain, bandwidth, noise figure, DC power}
+                OCB   : P in {gain, bandwidth, phase margin, FoM}
+              neighborhood_floor as cross-check at R3/R4 where coverage
+              is low (report kappa-sensitivity).
+  Metrics   : floor curve ell->Phi(R_ell,P) with CIs + coverage;
+              permutation null per rung (ratio to total var ~1).
+  Expected  : monotone-decreasing curves; gain and DC power below
+              tolerance by R2-R3; NOISE FIGURE clearly ABOVE tolerance
+              at R4 (device noise models + matching not in the graph).
+              Noise figure is the leading high-floor candidate and it is
+              measured from NATIVE FALCON labels (no re-simulation).
+  Produces  : Figure 3, Table 4 (floor columns).
+  Supports  : the graph-determined vs. simulation-required split.
+
+--- E3  GAP vs FLOOR ---------------------------------------------------
+  Objective : show expressiveness closes gaps, not floors.
+  Data/Method: at each rung, best GNN error across the FULL encoder
+              ladder (Tiers 1-3, including GraphGPS); gap = best error
+              - floor, with a CI (propagate floor CI + model-error var).
+  Expected  : which term dominates is unknown a priori (that is the whole
+              point). We expect >=1 property gap-dominated at coarse rungs
+              (error falls as expressiveness rises, toward the floor) and
+              >=1 floor-dominated (error plateaus above the floor for
+              EVERY encoder, including the GraphGPS transformer).
+  Produces  : Table 3 (best-GNN + gap columns).
+  Supports  : Theorem 2 + Corollary 2 (expressiveness closes the gap,
+              never the floor); Corollary 1 (even a transformer >= floor).
+
+--- E4  COLLISION CASE STUDIES -----------------------------------------
+  Objective : make the floor mechanistic, not statistical.
+  Method    : at R3/R4, extract R-equivalent circuit pairs with large
+              property spread; identify the responsible physics
+              (bias-dependent g_m, device noise, parasitics, mismatch).
+  Expected  : a small gallery of "same graph, different SPICE" pairs.
+  Supports  : interpretability; pre-empts "artifact of your partition".
+
+--- E5  CROSS-BENCHMARK CONSISTENCY ------------------------------------
+  Objective : show the boundary is a property of representation+physics,
+              not of one dataset.
+  Method    : for the SHARED properties (gain, bandwidth), compare the
+              minimum sufficient rung and floor-curve shape on FALCON
+              vs OCB.
+  Expected  : the qualitative per-property pattern agrees across two
+              families and two graph conventions. Disagreement = scope.
+  Supports  : generality of the finding.
+  Note      : Re-simulation via OCB's simulator is needed ONLY for a
+              property NEITHER benchmark labels (e.g., PSRR); FALCON
+              labels noise figure and DC power natively.
+
+--- E6  DECOMPOSITION vs THE LEADERBOARD (the justifying experiment) ---
+  Objective : show the total error the field reports conflates floor and
+              gap, so the decomposition changes the recommended action.
+  Method    : reproduce (within tolerance) the per-metric total errors of
+              FALCON's net-level GNN and the RF-informed terminal-level
+              model on their released data; decompose each into floor
+              (partition_floor) + gap (reproduced total - floor).
+  Expected  : >=1 metric with a competitive leaderboard error that is
+              FLOOR-dominated (so "improve the architecture" is
+              misdirected) and >=1 with similar total error that is
+              GAP-dominated (a better encoder does help).
+  Produces  : Table 4 (SOTA total vs floor vs gap vs verdict).
+  Supports  : the paper's operative claim; this is the money experiment.
+
+--- E7  ORACLE VALIDATION OF THE SIMULATION LIMIT ----------------------
+  Objective : validate Proposition 1 end to end (a persistent floor =
+              variance from factors OUTSIDE the netlist).
+  Method    : on a subset, INJECT a known spread of non-netlist variation
+              into the labels by re-simulating with controlled device
+              mismatch / process corners (or calibrated Monte-Carlo);
+              sweep the injected variance sigma^2_inj.
+  Expected  : the estimated R4 floor TRACKS sigma^2_inj across the sweep
+              (Eq. 5), and NO encoder in the ladder, incl. GraphGPS,
+              beats it. This exhibits the mechanism of a persistent floor
+              rather than inferring it.
+  Supports  : Proposition 1; de-risks the "requires simulation" claim.
+  Note      : if no injection is run, report the persistent-floor
+              question as OPEN (do not assert a persistent floor).
+
+--- E8  ESTIMATOR ROBUSTNESS (instrument validation) ------------------
+  Objective : show the FLOOR is a property of the data, not a knob.
+  Method    : (a) recompute the R2 floor across device-value BIN WIDTHS;
+              (b) check partition vs neighborhood estimators AGREE within
+              CIs where coverage is adequate;
+              (c) cross-check with an information-theoretic irreducible-
+              error estimator (kNN mutual information, in the spirit of
+              Yuan & Lozano-Duran 2025) on the same partition;
+              (d) COVERAGE CONVERGENCE: Phi_hat stabilizes as N grows;
+              (e) LABEL PRECISION: re-estimate under added label
+              quantization to rule out a label-noise artifact.
+  Expected  : floor stable across (a)-(e); disagreements reported.
+  Supports  : the instrument produces the floor, not a modeling choice.
+
+----------------------------------------------------------------------
+3. WHAT "PROMISING" vs "NEGATIVE" LOOKS LIKE
+----------------------------------------------------------------------
+PROMISING (paper as framed):
+  - E1 passes.
+  - At least one property has a near-zero floor at some rung AND at least
+    one property (leading candidate: noise figure on FALCON) retains a
+    clearly-nonzero floor at R4, with CIs that separate the two regimes.
+    The split is the paper.
+PARTIALLY NEGATIVE (still publishable, reframe):
+  - Every studied property reaches a near-zero floor by R4 on both
+    benchmarks. Then the honest finding is "for these families the graph
+    is sufficient for these specs; the open problem is the gap" -- retitle
+    around that. Note this is unlikely for noise figure, which is
+    physically the strongest high-floor candidate.
+NEGATIVE (do not force):
+  - Floors are dominated by low coverage at every fine rung and the
+    neighborhood cross-check disagrees wildly. Then you cannot claim a
+    clean boundary; report the measurement limitation and consider a
+    denser-collision subset before submission.
+
+----------------------------------------------------------------------
+4. FLAG-BACK TRIGGERS (stop and reconsider)
+----------------------------------------------------------------------
+  * E1 does not come out easy                     -> pipeline bug.
+  * gap < 0 by more than estimation noise         -> floor overestimated
+                                                     (low coverage) or
+                                                     targets mis-scaled.
+  * permutation-null floor / total-var far from 1 -> keying leaks P.
+  * partition and neighborhood estimates diverge  -> report both; do not
+    at a rung with adequate coverage                pick the convenient one.
+  * a new 2026-2027 paper covers the floor/gap     -> re-run the Phase-1
+    split for circuits                               novelty search; re-angle.
+
+----------------------------------------------------------------------
+5. INTEGRITY REMINDERS
+----------------------------------------------------------------------
+  * No number enters the manuscript until it is produced by these runs.
+    Every figure/table currently shows visible [RESULT] placeholders.
+  * The proof in Appendix A is elementary but AI-drafted; a human author
+    must verify it independently before submission.
+  * Confirm novelty right before submission: the circuit-GNN and GNN-
+    expressiveness areas move monthly (Flow-Attentional GNN is 2025).
+    Re-run the deep arXiv search; if a floor/gap-for-circuits paper has
+    appeared, re-angle honestly.
+  * The bibliography is now fully verified (no "% VERIFY" flags remain;
+    Graph of Circuits = NeurIPS 2023 by Shahane et al., LaMAGIC = ICML
+    2024 by Chang et al., dimensionless-learning irreducible error =
+    Yuan and Lozano-Duran 2025). Still re-check every citation against
+    the source at submission time as good practice; never invent authors.
+  * Confirm FALCON's exact field names, units, and redistribution
+    license against the released repo BEFORE using it or releasing any
+    derived artifact. Do not assume noise figure / DC power fields exist
+    until you have seen them in the files.
+  * Reconcile the abstract, title framing, and contribution list with
+    the ACTUAL floor curves once E2/E3 return; soften if the split is
+    less sharp than hypothesized.
+  * Get 2-3 independent human mock reviews and treat every raised issue
+    as blocking.
+======================================================================
+
+================================================================
+ADDED BY THE INTEGRITY AUDIT (resolve before submission)
+================================================================
+B1. PER-METRIC NUMBERS FROM PRIOR WORK ARE NOT YET VERIFIED.
+    Only these are confirmed against the sources:
+      - FALCON: <10% relative error in performance prediction; ~1M
+        Cadence-simulated mm-wave circuits; 20 topologies; 5 families.
+      - RF-Informed GNN: device-terminal graph abstraction; average
+        mean relative error 3.45% across active RF classes.
+    NOT yet confirmed, and removed from the draft until they are:
+      - any per-metric error figure (e.g. "DC power under 1%");
+      - the claim that specific metrics are easiest/hardest;
+      - any comparison of net- vs component- vs terminal-level
+        accuracy attributed to the RF paper.
+    ACTION: read the released tables of the cited papers, record the
+    numbers in this runbook, and only then restore any such statement.
+
+B2. THE RF-INFORMED CITATION HAS TWO ARXIV VERSIONS WITH DIFFERENT
+    TITLES (arXiv:2508.16403). Confirm which version to cite.
+
+B3. GRAPHGPS UNIVERSALITY IS THE AUTHORS' OWN ARGUMENT, not a theorem
+    proved there. The draft now attributes it as such. Do not restate
+    it as established fact.
+
+B4. NEW THEORY ASSUMPTIONS NOW STATED EXPLICITLY, verify each:
+    - Thm 2 achievability assumes a COUNTABLE featured-graph space
+      (holds because R quantizes device values and graph size is
+      bounded). Check this holds for your actual ladder construction.
+    - Prop 1 assumes the finest rung encodes the netlist INJECTIVELY.
+      If R_4 quantizes, the equality weakens to an inequality (the
+      draft states this); confirm which case your R_4 is in.
+    - Cor 2 covers only encoders that are deterministic functions of R.
+      Randomized features are handled by a separate remark.
+
+B5. THE NEIGHBOURHOOD ESTIMATOR IS BIASED UPWARD (it absorbs the
+    variation of m* inside the neighbourhood). It can overstate the
+    floor, i.e. overstate impossibility. Never use it alone to support
+    a high-floor claim.

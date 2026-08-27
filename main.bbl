@@ -1,0 +1,226 @@
+\begin{thebibliography}{26}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Asadi et~al.(2025)Asadi, Popryho, and
+  Partin-Vaisband]{asadi2025rfinformed}
+Anahita Asadi, Leonid Popryho, and Inna Partin-Vaisband.
+\newblock {RF}-informed graph neural networks for accurate and data-efficient
+  circuit performance prediction.
+\newblock \emph{arXiv preprint arXiv:2508.16403}, 2025.
+\newblock arXiv:2508.16403 [VERIFIED]. Abstract confirms device-terminal graph
+  abstraction and average MRE 3.45\%. NOTE: arXiv lists a later version under
+  the title ``Fast and Accurate RFIC Performance Prediction via Pin Level Graph
+  Neural Networks and Probabilistic Flow''; confirm which version to cite.
+  Per-metric claims must be checked against the paper's own tables.
+
+\bibitem[Bevilacqua et~al.(2022)Bevilacqua, Frasca, Lim, Srinivasan, Cai,
+  Balamurugan, Bronstein, and Maron]{bevilacqua2022esan}
+Beatrice Bevilacqua, Fabrizio Frasca, Derek Lim, Balasubramaniam Srinivasan,
+  Chen Cai, Gopinath Balamurugan, Michael~M. Bronstein, and Haggai Maron.
+\newblock Equivariant subgraph aggregation networks.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2022.
+\newblock [VERIFIED via expressiveness reference lists].
+
+\bibitem[Chang et~al.(2024)Chang, Shen, Fan, Li, Zhang, Cao, Chen, and
+  Zhang]{chang2024lamagic}
+Chen-Chia Chang, Yikang Shen, Shaoze Fan, Jing Li, Shun Zhang, Ningyuan Cao,
+  Yiran Chen, and Xuan Zhang.
+\newblock {LaMAGIC}: Language-model-based topology generation for analog
+  integrated circuits.
+\newblock In \emph{International Conference on Machine Learning (ICML), PMLR
+  235}, pages 6253--6262, 2024.
+\newblock arXiv:2407.18269 [VERIFIED].
+
+\bibitem[Cover and Thomas(2006)]{cover2006information}
+Thomas~M. Cover and Joy~A. Thomas.
+\newblock \emph{Elements of Information Theory}.
+\newblock Wiley, 2nd edition, 2006.
+\newblock [VERIFIED, classical reference; data-processing inequality].
+
+\bibitem[Devroye et~al.(1996)Devroye, Gy{\"o}rfi, and
+  Lugosi]{devroye1996probabilistic}
+Luc Devroye, L{\'a}szl{\'o} Gy{\"o}rfi, and G{\'a}bor Lugosi.
+\newblock A probabilistic theory of pattern recognition.
+\newblock \emph{Springer}, 1996.
+\newblock [VERIFIED, classical reference; Bayes risk].
+
+\bibitem[Dong et~al.(2023)Dong, Cao, Zhang, Tao, Chen, and
+  Zhang]{dong2023cktgnn}
+Zehao Dong, Weidong Cao, Muhan Zhang, Dacheng Tao, Yixin Chen, and Xuan Zhang.
+\newblock {CktGNN}: Circuit graph neural network for electronic design
+  automation.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2023.
+\newblock arXiv:2308.16406 [VERIFIED].
+
+\bibitem[Fayazi et~al.(2023)Fayazi, Taba, Afshari, and
+  Dreslinski]{fayazi2023funtom}
+Morteza Fayazi, Morteza~Tavakoli Taba, Ehsan Afshari, and Ronald Dreslinski.
+\newblock {FuNToM}: Functional modeling of {RF} circuits using a neural network
+  assisted two-port analysis method.
+\newblock In \emph{IEEE/ACM International Conference on Computer-Aided Design
+  (ICCAD)}, 2023.
+\newblock [VERIFIED via RF-Informed GNN reference list].
+
+\bibitem[Gao et~al.(2025)Gao, Cao, Yang, and Zhang]{gao2025analoggenie}
+Jian Gao, Weidong Cao, Junyi Yang, and Xuan Zhang.
+\newblock {AnalogGenie}: A generative engine for automatic discovery of analog
+  circuit topologies.
+\newblock \emph{arXiv preprint arXiv:2503.00205}, 2025.
+\newblock [VERIFIED].
+
+\bibitem[Hastie et~al.(2009)Hastie, Tibshirani, and Friedman]{hastie2009esl}
+Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
+\newblock \emph{The Elements of Statistical Learning: Data Mining, Inference,
+  and Prediction}.
+\newblock Springer, 2nd edition, 2009.
+\newblock [VERIFIED, classical reference; conditional mean minimizes squared
+  risk].
+
+\bibitem[Hornik(1991)]{hornik1991}
+Kurt Hornik.
+\newblock Approximation capabilities of multilayer feedforward networks.
+\newblock \emph{Neural Networks}, 4\penalty0 (2):\penalty0 251--257, 1991.
+\newblock [VERIFIED]; universal approximation in $L^p(\mu)$ for arbitrary
+  finite input measures.
+
+\bibitem[Lee et~al.(2025)Lee, Wang, Kim, Lee, Lai, and Pan]{lee2025dice}
+Sungyoung Lee, Ziyi Wang, Seunggeun Kim, Taekyun Lee, Yao Lai, and David~Z.
+  Pan.
+\newblock {DICE}: Device-level integrated circuits encoder with graph
+  contrastive pretraining.
+\newblock \emph{arXiv preprint arXiv:2502.08949}, 2025.
+\newblock [VERIFIED]; self-supervised contrastive-pretrained device-level
+  circuit GNN.
+
+\bibitem[Loukas(2020)]{loukas2020cannotlearn}
+Andreas Loukas.
+\newblock What graph neural networks cannot learn: Depth vs width.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2020.
+\newblock [VERIFIED].
+
+\bibitem[Mehradfar et~al.(2025)Mehradfar, Zhao, Huang, Ceyani, Yang, Han,
+  Aghasi, and Avestimehr]{mehradfar2025falcon}
+Asal Mehradfar, Xuzhe Zhao, Yilun Huang, Emir Ceyani, Yankai Yang, Shihao Han,
+  Hamidreza Aghasi, and Salman Avestimehr.
+\newblock {FALCON}: An {ML} framework for fully automated layout-constrained
+  analog circuit design.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2025.
+\newblock arXiv:2505.21923 [VERIFIED]; public 1M-circuit dataset, 20
+  topologies, 5 families, native gain/BW/NF/DC-power/phase-noise.
+
+\bibitem[Morris et~al.(2019)Morris, Ritzert, Fey, Hamilton, Lenssen, Rattan,
+  and Grohe]{morris2019wl}
+Christopher Morris, Martin Ritzert, Matthias Fey, William~L. Hamilton, Jan~Eric
+  Lenssen, Gaurav Rattan, and Martin Grohe.
+\newblock Weisfeiler and leman go neural: Higher-order graph neural networks.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, 2019.
+\newblock [VERIFIED].
+
+\bibitem[Pan et~al.(2025)Pan, Zhou, Ma, Wang, Zhao, Li, Lin, Li{\`o}, and
+  Wang]{pan2025gnnaclp}
+Guanyuan Pan, Tiansheng Zhou, Bingtao Ma, Yaqi Wang, Jianxiang Zhao, Zhi Li,
+  Yugui Lin, Pietro Li{\`o}, and Shuai Wang.
+\newblock {GNN-ACLP}: Graph neural networks based analog circuit link
+  prediction.
+\newblock \emph{Engineering Applications of Artificial Intelligence (also
+  arXiv:2504.10240)}, 2025.
+\newblock [VERIFIED].
+
+\bibitem[Plettenberg et~al.(2025)Plettenberg, K{\"o}hler, Sick, and
+  Thomas]{plettenberg2025flow}
+Pascal Plettenberg, Dominik K{\"o}hler, Bernhard Sick, and Josephine~M. Thomas.
+\newblock Flow-attentional graph neural networks.
+\newblock \emph{Transactions on Machine Learning Research (TMLR)}, 2025.
+\newblock arXiv:2506.06127 [VERIFIED].
+
+\bibitem[Ramp{\'a}{\v{s}}ek et~al.(2022)Ramp{\'a}{\v{s}}ek, Galkin, Dwivedi,
+  Luu, Wolf, and Beaini]{rampasek2022graphgps}
+Ladislav Ramp{\'a}{\v{s}}ek, Mikhail Galkin, Vijay~Prakash Dwivedi, Anh~Tuan
+  Luu, Guy Wolf, and Dominique Beaini.
+\newblock Recipe for a general, powerful, scalable graph transformer.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2022.
+\newblock arXiv:2205.12454 [VERIFIED]; GraphGPS graph transformer. The authors
+  \emph{argue} the architecture is a universal function approximator on graphs
+  (abstract); cite as their claim, not as a theorem.
+
+\bibitem[S{\'a}nchez et~al.(2023)S{\'a}nchez, Servadei, Kiprit, Wille, and
+  Ecker]{sanchez2023survey}
+Daniela S{\'a}nchez, Lorenzo Servadei, Gamze~Naz Kiprit, Robert Wille, and
+  Wolfgang Ecker.
+\newblock A comprehensive survey on electronic design automation and graph
+  neural networks: Theory and applications.
+\newblock \emph{ACM Transactions on Design Automation of Electronic Systems},
+  28\penalty0 (2):\penalty0 1--27, 2023.
+\newblock [VERIFIED via Flow-Attentional GNN reference list].
+
+\bibitem[Sato et~al.(2021)Sato, Yamada, and Kashima]{sato2021random}
+Ryoma Sato, Makoto Yamada, and Hisashi Kashima.
+\newblock Random features strengthen graph neural networks.
+\newblock In \emph{SIAM International Conference on Data Mining (SDM)}, 2021.
+\newblock [VERIFIED].
+
+\bibitem[Shahane et~al.(2023)Shahane, Manjiri, Jain, and
+  Kumar]{graphofcircuits2023}
+Aditya~Hemant Shahane, Saripilli Venkata~Swapna Manjiri, Ankesh Jain, and
+  Sandeep Kumar.
+\newblock Graph of circuits with {GNN} for exploring the optimal design space.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2023.
+\newblock [VERIFIED]; introduces the Graph of Circuits Explorer (GCX)
+  semi-supervised GNN surrogate.
+
+\bibitem[Shen and Dong(2025)]{shen2025graphsufficiency}
+Cencheng Shen and Yuexiao Dong.
+\newblock A graph sufficiency perspective for neural networks.
+\newblock \emph{arXiv preprint arXiv:2507.10215}, 2025.
+\newblock [VERIFIED]; sufficiently expressive layers preserve the input's
+  information (injectivity / region separation); shares the Bayes-MSE /
+  conditional-variance estimand.
+
+\bibitem[Thost and Chen(2021)]{thost2021dagnn}
+Veronika Thost and Jie Chen.
+\newblock Directed acyclic graph neural networks.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2021.
+\newblock [VERIFIED].
+
+\bibitem[Weisfeiler and Leman(1968)]{weisfeiler1968reduction}
+Boris Weisfeiler and Andrei Leman.
+\newblock A reduction of a graph to a canonical form and an algebra arising
+  during this reduction.
+\newblock \emph{Nauchno-Technicheskaya Informatsia}, 2\penalty0 (9):\penalty0
+  12--16, 1968.
+\newblock [VERIFIED, classical reference].
+
+\bibitem[Xu et~al.(2019)Xu, Hu, Leskovec, and Jegelka]{xu2019gin}
+Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka.
+\newblock How powerful are graph neural networks?
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+\newblock [VERIFIED].
+
+\bibitem[Yuan and Lozano-Dur{\'a}n(2025)]{dimensionless2025irreducible}
+Yuan Yuan and Adri{\'a}n Lozano-Dur{\'a}n.
+\newblock Dimensionless learning based on information.
+\newblock \emph{arXiv preprint arXiv:2504.03927 (also Nature Communications)},
+  2025.
+\newblock [VERIFIED]; information-theoretic irreducible-error bound on the
+  minimum error achievable across all models.
+
+\bibitem[Zhang et~al.(2019)Zhang, Jiang, Cui, Garnett, and Chen]{zhang2019dvae}
+Muhan Zhang, Shali Jiang, Zhicheng Cui, Roman Garnett, and Yixin Chen.
+\newblock {D-VAE}: A variational autoencoder for directed acyclic graphs.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019.
+\newblock [VERIFIED].
+
+\end{thebibliography}
